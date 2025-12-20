@@ -22,3 +22,7 @@ func (hs *HashSet[T]) Has(item T) bool {
 func (hs *HashSet[T]) Del(item T) {
 	delete(hs.m, item)
 }
+
+func (hs *HashSet[T]) Len() int {
+	return len(hs.m)
+}
