@@ -1,15 +1,31 @@
 package cmd
 
 import (
-	"fmt"
+	"os"
 
+	"github.com/alontzafari/goprojx/internal/loader"
+	"github.com/dominikbraun/graph/draw"
 	"github.com/spf13/cobra"
 )
 
 var graphCmd = &cobra.Command{
 	Use: "graph",
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("graph")
+	RunE: func(cmd *cobra.Command, args []string) error {
+		pkgs, err := loader.Load()
+		if err != nil {
+			return err
+		}
+
+		f, err := os.Create("./graph.gv")
+		if err != nil {
+			return err
+		}
+
+		return draw.DOT(pkgs, f)
+
+		// jenc := json.NewEncoder(os.Stdout)
+		// jenc.SetIndent("", "\t")
+		// return jenc.Encode(pkgs)
 	},
 }
 
