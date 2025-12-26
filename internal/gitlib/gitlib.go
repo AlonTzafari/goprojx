@@ -7,7 +7,19 @@ import (
 )
 
 func GetDiffs(ctx context.Context, head, base string) ([]string, error) {
-	cmd := exec.Command("git", "diff", "--name-only", head, base)
+	args := make([]string, 0, 4)
+	args = append(args, "diff", "--name-only")
+
+	if head != "" {
+		args = append(args, head)
+	}
+
+	if base != "" {
+		args = append(args, base)
+	}
+
+	cmd := exec.Command("git", args...)
+
 	stdout, err := cmd.StdoutPipe()
 	if err != nil {
 		return nil, err

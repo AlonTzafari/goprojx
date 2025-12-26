@@ -6,8 +6,8 @@ import (
 )
 
 var execCmd = &cobra.Command{
-	Use: "exec",
-
+	Use:  "exec [COMMAND]",
+	Args: cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		head, err := cmd.Flags().GetString("head")
 		if err != nil {
@@ -18,7 +18,7 @@ var execCmd = &cobra.Command{
 			return err
 		}
 
-		return exec.OnAffected(cmd.Context(), "go test", head, base)
+		return exec.OnAffected(cmd.Context(), args[0], head, base)
 	},
 }
 

@@ -22,10 +22,6 @@ var graphCmd = &cobra.Command{
 		}
 
 		return draw.DOT(pkgs, f)
-
-		// jenc := json.NewEncoder(os.Stdout)
-		// jenc.SetIndent("", "\t")
-		// return jenc.Encode(pkgs)
 	},
 }
 
