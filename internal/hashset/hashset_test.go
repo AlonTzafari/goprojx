@@ -11,13 +11,14 @@ func TestHashSet(t *testing.T) {
 		"s5",
 		"s6",
 	}
-	hs := New[string]()
-
-	for _, s := range data {
-		hs.Add(s)
-	}
+	hs := New(data...)
 
 	if hs.Len() != len(data) {
+		t.Logf("expected len %d, received %d", len(data), hs.Len())
+		t.Fail()
+	}
+
+	if len(hs.ToSlice()) != len(data) {
 		t.Logf("expected len %d, received %d", len(data), hs.Len())
 		t.Fail()
 	}
