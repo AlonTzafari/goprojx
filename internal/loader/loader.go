@@ -3,12 +3,13 @@ package loader
 import (
 	"errors"
 
+	"github.com/alontzafari/goprojx/internal/analyzer"
 	"github.com/alontzafari/goprojx/internal/hashset"
 	"github.com/dominikbraun/graph"
 	"golang.org/x/tools/go/packages"
 )
 
-func Load() (graph.Graph[string, *packages.Package], error) {
+func Load() (analyzer.Project, error) {
 	cfg := &packages.Config{
 		Mode: packages.LoadImports,
 	}

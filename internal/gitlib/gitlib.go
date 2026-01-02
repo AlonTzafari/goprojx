@@ -3,7 +3,9 @@ package gitlib
 import (
 	"bufio"
 	"context"
+	"os"
 	"os/exec"
+	"path/filepath"
 )
 
 func GetDiffs(ctx context.Context, head, base string) ([]string, error) {
@@ -16,6 +18,11 @@ func GetDiffs(ctx context.Context, head, base string) ([]string, error) {
 
 	if base != "" {
 		args = append(args, base)
+	}
+
+	wd, err := os.Getwd()
+	if err != nil {
+		return nil, err
 	}
 
 	cmd := exec.Command("git", args...)
@@ -32,6 +39,7 @@ func GetDiffs(ctx context.Context, head, base string) ([]string, error) {
 	lines := make([]string, 0)
 	for scanner.Scan() {
 		line := scanner.Text()
+		line = filepath.Join(wd, line)
 		lines = append(lines, line)
 	}
 	if scanner.Err() != nil {
